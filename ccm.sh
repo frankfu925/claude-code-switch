@@ -2296,9 +2296,15 @@ emit_env_exports() {
                 "qwen2.5-coder"|"qwen2.5")
                     bailian_model="qwen2.5-coder"
                     ;;
+                "glm-5.2"|"glm5.2"|"glm")
+                    bailian_model="glm-5.2"
+                    ;;
+                "deepseek-v4-pro"|"deepseek-v4"|"ds-v4")
+                    bailian_model="deepseek-v4-pro"
+                    ;;
                 *)
                     echo -e "${RED}❌ $(t 'unknown_option'): bailian $bailian_variant${NC}" >&2
-                    echo -e "${YELLOW}💡 Usage: ccm bailian [qwen3.7-plus|qwen3.5-plus|qwen2.5-coder]${NC}" >&2
+                    echo -e "${YELLOW}💡 Usage: ccm bailian [qwen3.7|qwen3.5|qwen2.5|glm-5.2|deepseek-v4-pro]${NC}" >&2
                     return 1
                     ;;
             esac
