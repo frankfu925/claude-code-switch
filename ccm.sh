@@ -2281,7 +2281,27 @@ emit_env_exports() {
                 echo -e "${RED}❌ Please configure BAILIAN_API_KEY${NC}" >&2
                 return 1
             fi
-            local bailian_model="${BAILIAN_MODEL:-qwen3.7-plus}"
+            local bailian_variant="$arg"
+            local bailian_model=""
+            case "$bailian_variant" in
+                ""|"default")
+                    bailian_model="${BAILIAN_MODEL:-qwen3.7-plus}"
+                    ;;
+                "qwen3.7-plus"|"qwen3.7")
+                    bailian_model="qwen3.7-plus"
+                    ;;
+                "qwen3.5-plus"|"qwen3.5")
+                    bailian_model="qwen3.5-plus"
+                    ;;
+                "qwen2.5-coder"|"qwen2.5")
+                    bailian_model="qwen2.5-coder"
+                    ;;
+                *)
+                    echo -e "${RED}❌ $(t 'unknown_option'): bailian $bailian_variant${NC}" >&2
+                    echo -e "${YELLOW}💡 Usage: ccm bailian [qwen3.7-plus|qwen3.5-plus|qwen2.5-coder]${NC}" >&2
+                    return 1
+                    ;;
+            esac
             echo "$prelude"
             echo "export ANTHROPIC_BASE_URL='https://token-plan.cn-beijing.maas.aliyuncs.com/apps/anthropic'"
             echo "if [ -f \"\$HOME/.ccm_config\" ]; then . \"\$HOME/.ccm_config\" >/dev/null 2>&1; fi"
@@ -2391,7 +2411,7 @@ main() {
             emit_env_exports stepfun
             ;;
         "bailian")
-            emit_env_exports bailian
+            emit_env_exports bailian "${2:-}"
             ;;
         "claude"|"sonnet"|"s")
             emit_env_exports claude
