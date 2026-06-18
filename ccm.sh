@@ -2311,7 +2311,7 @@ emit_env_exports() {
             echo "$prelude"
             echo "export ANTHROPIC_BASE_URL='https://token-plan.cn-beijing.maas.aliyuncs.com/apps/anthropic'"
             echo "if [ -f \"\$HOME/.ccm_config\" ]; then . \"\$HOME/.ccm_config\" >/dev/null 2>&1; fi"
-            echo "export ANTHROPIC_AUTH_TOKEN=\"\${BAILIAN_API_KEY}\""
+            echo "export ANTHROPIC_API_KEY=\"\${BAILIAN_API_KEY}\""
             echo "export ANTHROPIC_MODEL='${bailian_model}'"
             emit_default_models "$bailian_model" "$bailian_model" "$bailian_model"
             emit_subagent_model "$bailian_model"
