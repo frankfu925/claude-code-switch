@@ -181,7 +181,7 @@ DEEPSEEK_MODEL=deepseek-chat
 KIMI_MODEL=kimi-k2.5
 KIMI_CN_MODEL=kimi-k2.5
 QWEN_MODEL=qwen3-max-2026-01-23
-GLM_MODEL=glm-5
+GLM_MODEL=glm-5.2
 CLAUDE_MODEL=claude-sonnet-4-5-20250929
 OPUS_MODEL=claude-opus-4-6
 HAIKU_MODEL=claude-haiku-4-5-20251001
@@ -295,7 +295,7 @@ DEEPSEEK_MODEL=deepseek-chat
 KIMI_MODEL=kimi-k2.5
 KIMI_CN_MODEL=kimi-k2.5
 QWEN_MODEL=qwen3-max-2026-01-23
-GLM_MODEL=glm-5
+GLM_MODEL=glm-5.2
 CLAUDE_MODEL=claude-sonnet-4-5-20250929
 OPUS_MODEL=claude-opus-4-6
 HAIKU_MODEL=claude-haiku-4-5-20251001
@@ -423,7 +423,7 @@ project_write_glm_settings() {
         return 1
     fi
 
-    local glm_model="${GLM_MODEL:-glm-5}"
+    local glm_model="${GLM_MODEL:-glm-5.2}"
     local base_url=""
     case "$region" in
         "global")
@@ -596,7 +596,7 @@ get_provider_config() {
                 return 1
             fi
             config_token_var="GLM_API_KEY"
-            config_model="${GLM_MODEL:-glm-5}"
+            config_model="${GLM_MODEL:-glm-5.2}"
             case "$region" in
                 "global") config_base_url="https://api.z.ai/api/anthropic" ;;
                 "china") config_base_url="https://open.bigmodel.cn/api/anthropic" ;;
@@ -1600,7 +1600,7 @@ switch_to_glm() {
             base_url="https://open.bigmodel.cn/api/anthropic"
             ;;
     esac
-    local glm_model="${GLM_MODEL:-glm-5}"
+    local glm_model="${GLM_MODEL:-glm-5.2}"
     export ANTHROPIC_BASE_URL="$base_url"
     export ANTHROPIC_AUTH_TOKEN="$GLM_API_KEY"
     export ANTHROPIC_MODEL="$glm_model"
@@ -1750,8 +1750,8 @@ switch_to_seed() {
         "doubao"|"seed")
             seed_model="doubao-seed-code"
             ;;
-        "glm"|"glm5")
-            seed_model="glm-5"
+        "glm"|"glm5"|"glm-5.2")
+            seed_model="glm-5.2"
             ;;
         "deepseek"|"ds")
             seed_model="deepseek-v3.2"
@@ -1837,7 +1837,7 @@ show_help() {
     echo "  ⚡ StepFun              - step-3.5-flash (api.stepfun.ai)"
     echo "  🎯 MiniMax              - MiniMax-M2.5 (api.minimax.io / api.minimaxi.com)"
     echo "  🐪 Qwen                 - qwen3-max-2026-01-23 / qwen3-coder-plus (Coding Plan)"
-    echo "  🇨🇳 GLM                 - glm-5 (api.z.ai / open.bigmodel.cn)"
+    echo "  🇨🇳 GLM                 - glm-5.2 (api.z.ai / open.bigmodel.cn)"
     echo "  🧠 Claude Sonnet 4.5    - claude-sonnet-4-5-20250929"
 }
 
@@ -1851,7 +1851,7 @@ ensure_model_override_defaults() {
         "SEED_MODEL=ark-code-latest"
         "STEPFUN_MODEL=step-3.5-flash"
         "QWEN_MODEL=qwen3-max-2026-01-23"
-        "GLM_MODEL=glm-5"
+        "GLM_MODEL=glm-5.2"
         "CLAUDE_MODEL=claude-sonnet-4-5-20250929"
         "OPUS_MODEL=claude-opus-4-6"
         "HAIKU_MODEL=claude-haiku-4-5-20251001"
@@ -1928,9 +1928,10 @@ update_config() {
     local -a updates=(
         "KIMI_MODEL|kimi-for-coding|kimi-k2.5"
         "MINIMAX_MODEL|MiniMax-M2.1|MiniMax-M2.5"
-        "GLM_MODEL|glm-4|glm-5"
-        "GLM_MODEL|glm-4.6|glm-5"
-        "GLM_MODEL|glm-4.7|glm-5"
+        "GLM_MODEL|glm-4|glm-5.2"
+        "GLM_MODEL|glm-4.6|glm-5.2"
+        "GLM_MODEL|glm-4.7|glm-5.2"
+        "GLM_MODEL|glm-5|glm-5.2"
     )
 
     local updated_count=0
@@ -2023,9 +2024,9 @@ emit_openrouter_exports() {
             default_opus="$model"
             default_haiku="$model"
             ;;
-        "glm"|"glm5")
-            model="z-ai/glm-5"
-            small="z-ai/glm-5"
+        "glm"|"glm5"|"glm-5.2")
+            model="z-ai/glm-5.2"
+            small="z-ai/glm-5.2"
             default_sonnet="$model"
             default_opus="$model"
             default_haiku="$model"
@@ -2187,7 +2188,7 @@ emit_env_exports() {
                     glm_base_url="https://open.bigmodel.cn/api/anthropic"
                     ;;
             esac
-            local glm_model="${GLM_MODEL:-glm-5}"
+            local glm_model="${GLM_MODEL:-glm-5.2}"
             echo "$prelude"
             echo "export ANTHROPIC_BASE_URL='${glm_base_url}'"
             echo "if [ -f \"\$HOME/.ccm_config\" ]; then . \"\$HOME/.ccm_config\" >/dev/null 2>&1; fi"
@@ -2239,8 +2240,8 @@ emit_env_exports() {
                 "doubao"|"seed")
                     seed_model="doubao-seed-code"
                     ;;
-                "glm"|"glm5")
-                    seed_model="glm-5"
+                "glm"|"glm5"|"glm-5.2")
+                    seed_model="glm-5.2"
                     ;;
                 "deepseek"|"ds")
                     seed_model="deepseek-v3.2"

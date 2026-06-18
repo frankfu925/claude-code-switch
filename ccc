@@ -68,7 +68,7 @@ fi
 # Helper: is known model keyword
 is_known_model() {
     case "$1" in
-        deepseek|ds|glm|glm4|glm4.6|glm4.7|kimi|kimi2|qwen|minimax|mm|seed|doubao|claude|sonnet|s|open)
+        deepseek|ds|glm|glm4|glm4.6|glm4.7|kimi|kimi2|qwen|minimax|mm|seed|doubao|claude|sonnet|s|open|bailian)
             return 0 ;;
         *)
             return 1 ;;
@@ -105,12 +105,20 @@ else
                     shift || true
                 fi
                 ;;
+            bailian)
+                if [[ "${1:-}" =~ ^(qwen3.7|qwen3.5|qwen2.5|glm|glm-5.2|deepseek-v4)$ ]]; then
+                    bailian_variant="$1"
+                    shift || true
+                fi
+                ;;
         esac
 
         if [[ -n "$seed_variant" ]]; then
             eval "$("$CCM" "$model" "$seed_variant")"
         elif [[ -n "$region_arg" ]]; then
             eval "$("$CCM" "$model" "$region_arg")"
+        elif [[ -n "$bailian_variant" ]]; then
+            eval "$("$CCM" "$model" "$bailian_variant")"
         else
             eval "$("$CCM" "$model")"
         fi
